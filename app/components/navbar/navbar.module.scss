@@ -1,0 +1,53 @@
+.toplevel {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #E1523D;
+    padding: 10px;
+}
+
+.logoImg {
+    display: flex;
+    align-items: center;
+    height: 60px;
+    width: 80px;
+    margin-right: 8px;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.navleft {
+    display: flex;
+    flex: 1;
+    align-items: center;
+}
+
+.navLink {
+    all: unset;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    text-wrap: nowrap;
+    gap: 8px;
+    cursor: pointer;
+
+    svg {
+        height: 24px;
+        width: 24px;
+    }
+}
+
+.navright {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-left: auto;
+    color: white;
+    margin-right: 2%;
+    cursor: pointer;
+}
