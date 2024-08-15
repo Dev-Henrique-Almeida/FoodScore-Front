@@ -92,7 +92,7 @@ export default function Register() {
 
           <div className={styles.register}>
             <span>
-              Já tem uma conta? <Link href="/login">Faça login</Link>
+              Já tem uma conta? <Link href="/login" className={styles.regiterLink}>Faça login</Link>
             </span>
           </div>
         </form>
