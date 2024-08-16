@@ -1,38 +1,39 @@
 "use client";
 
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./login.module.scss";
 import Link from "next/link";
-import { useAuthContext } from "@/app/shared/contexts/AuthContext";
+import useHandleChangeUser from "@/app/shared/hooks/HandleChangeUser/useHandleChangeUser";
+import { useAuthContext } from "@/app/shared/contexts";
+import { loginUser } from "@/app/shared/service";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const { setUser, setToken } = useAuthContext();
   const router = useRouter();
+  const { formData, handleChange } = useHandleChangeUser();
+  const [error, setError] = useState("");
+  const { user, setUser, setToken } = useAuthContext();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  useEffect(() => {
+    if (user) {
+      router.push("/home");
+    }
+  }, [user, router]);
+
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     e.preventDefault();
+
+    // Apenas os campos necessários para o login
+    const { email, password } = formData;
+    const dataToSend = { email, password };
+
     try {
-      const response = await axios.post("http://localhost:3000/users/login", {
-        email,
-        password,
-      });
-      console.log(response.data);
-      const { data, token } = response.data; 
-      const user = {
-        id: data.id,
-        name: data.name,
-        email: data.email,
-      };
-
-      setUser(user);
-      setToken(token);
-
-      router.push("/");
+      const data = await loginUser(dataToSend);
+      setUser(data.user);
+      setToken(data.token);
+      router.push("/home");
     } catch (err) {
       setError("Login falhou. Por favor, tente novamente.");
     }
@@ -54,13 +55,13 @@ export default function Login() {
               placeholder="email"
               required
               className={styles.input}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={formData.email}
+              onChange={handleChange}
             />
           </div>
           <div className={styles.field}>
-            <label htmlFor="Senha" className={styles.label}>
-              Password:
+            <label htmlFor="password" className={styles.label}>
+              Senha:
             </label>
             <input
               type="password"
@@ -69,8 +70,8 @@ export default function Login() {
               placeholder="Senha"
               required
               className={styles.input}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={formData.password}
+              onChange={handleChange}
             />
           </div>
           <button type="submit" className={styles.buttonSubmmit}>

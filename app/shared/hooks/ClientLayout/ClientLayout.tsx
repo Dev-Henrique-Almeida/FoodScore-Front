@@ -1,16 +1,16 @@
 "use client";
 
-import Navbar from "./components/navbar";
-import Footer from "./components/footer";
 import { usePathname } from "next/navigation";
+import Navbar from "../../components/navbar";
+import Footer from "../../components/footer";
 
 export default function ClientLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const isAuthPage = pathname === '/login' || pathname === '/register';
+  const isAuthPage = pathname === "/login" || pathname === "/register";
 
   return (
     <>

@@ -1,38 +1,51 @@
 "use client";
 
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useEffect, useState } from "react";
 import styles from "../login/login.module.scss";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import useHandleChangeUser from "@/app/shared/hooks/HandleChangeUser/useHandleChangeUser";
+import { useAuthContext } from "@/app/shared/contexts";
+import { createUser, loginUser } from "@/app/shared/service";
 
 export default function Register() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const router = useRouter();
+  const { formData, handleChange } = useHandleChangeUser();
+
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const { user, setUser, setToken } = useAuthContext();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  useEffect(() => {
+    if (user) {
+      router.push("/home");
+    }
+  }, [user, router]);
+
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     e.preventDefault();
 
+    const { id, ...dataToSend } = formData;
+
     try {
-      const response = await axios.post("http://localhost:3000/users", {
-        name,
-        email,
-        password,
+      await createUser(dataToSend);
+
+      const loginData = await loginUser({
+        email: formData.email,
+        password: formData.password,
       });
+      setUser(loginData.user);
+      setToken(loginData.token);
 
       setSuccess("Registro realizado com sucesso!");
-      if (response.status === 201) {
-        console.log(response.data);
-        const { name, token } = response.data;
-      }
+      router.push("/home");
     } catch (err) {
       setError("O registro falhou. Por favor, tente novamente.");
       setSuccess("");
     }
   };
-
   return (
     <div className={styles.topLevel}>
       <div className={styles.container}>
@@ -49,8 +62,8 @@ export default function Register() {
               placeholder="Nome"
               required
               className={styles.input}
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={formData.name}
+              onChange={handleChange}
             />
           </div>
           <div className={styles.field}>
@@ -64,8 +77,8 @@ export default function Register() {
               placeholder="Email"
               required
               className={styles.input}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={formData.email}
+              onChange={handleChange}
             />
           </div>
           <div className={styles.field}>
@@ -79,8 +92,8 @@ export default function Register() {
               placeholder="Senha"
               required
               className={styles.input}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={formData.password}
+              onChange={handleChange}
             />
           </div>
           <button type="submit" className={styles.buttonSubmmit}>
@@ -92,7 +105,10 @@ export default function Register() {
 
           <div className={styles.register}>
             <span>
-              Já tem uma conta? <Link href="/login" className={styles.regiterLink}>Faça login</Link>
+              Já tem uma conta?{" "}
+              <Link href="/login" className={styles.regiterLink}>
+                Faça login
+              </Link>
             </span>
           </div>
         </form>
