@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import styles from "../login/login.module.scss";
+import styles from "./register.module.scss";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import useHandleChangeUser from "@/app/shared/hooks/HandleChangeUser/useHandleChangeUser";
@@ -13,6 +13,7 @@ export default function Register() {
   const { formData, handleChange } = useHandleChangeUser();
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState(""); // Estado para confirmar senha
   const { user, setUser, setToken } = useAuthContext();
 
   useEffect(() => {
@@ -23,6 +24,12 @@ export default function Register() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
+
+    // Validação da confirmação de senha
+    if (formData.password !== confirmPassword) {
+      setError("As senhas não coincidem. Tente novamente.");
+      return;
+    }
 
     const { id, ...dataToSend } = formData;
 
@@ -154,6 +161,21 @@ export default function Register() {
               className={styles.input}
               value={formData.password}
               onChange={handleChange}
+            />
+          </div>
+          <div className={styles.field}>
+            <label htmlFor="confirmPassword" className={styles.label}>
+              Confirmar Senha:
+            </label>
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              placeholder="Confirmar Senha"
+              required
+              className={styles.input}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </div>
           <button type="submit" className={styles.buttonSubmmit}>
