@@ -7,16 +7,19 @@ import HomeIcon from "@mui/icons-material/Home";
 import { useAuthContext } from "@/app/shared/contexts/Auth/AuthContext";
 import { useRouter } from "next/navigation";
 
-
 const Navbar = () => {
   const { user, setUser, setToken } = useAuthContext();
   const router = useRouter();
 
   const handleLogout = () => {
-    setUser(null);
-    setToken(null);
-    localStorage.clear(); 
-    router.push("/login"); 
+    const confirmed = window.confirm("Você realmente deseja sair?");
+
+    if (confirmed) {
+      setUser(null);
+      setToken(null);
+      localStorage.clear();
+      router.push("/login");
+    }
   };
 
   return (
@@ -42,7 +45,7 @@ const Navbar = () => {
                 </button>
               </>
             ) : (
-              <Link href="/login">
+              <Link href="/login" className={styles.loginLink}>
                 <p>Login</p>
               </Link>
             )}

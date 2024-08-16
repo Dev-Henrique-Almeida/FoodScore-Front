@@ -1,9 +1,14 @@
-import Login from "./(general)/login/page";
+"use client";
+import Home from "./(general)/home/page";
+import Footer from "./shared/components/footer";
+import Navbar from "./shared/components/navbar";
 
-export default function Home() {
+export default function Page() {
   return (
     <main>
-      <Login />
+      <Navbar />
+      <Home />
+      <Footer />
     </main>
   );
 }
