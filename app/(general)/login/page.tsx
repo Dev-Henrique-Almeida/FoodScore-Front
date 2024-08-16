@@ -52,7 +52,7 @@ export default function Login() {
               type="email"
               id="email"
               name="email"
-              placeholder="email"
+              placeholder="Email"
               required
               className={styles.input}
               value={formData.email}
