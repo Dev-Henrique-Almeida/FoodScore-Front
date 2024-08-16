@@ -1,11 +1,10 @@
-import Image from "next/image";
+import Login from "./(general)/login/page";
 import styles from "./page.module.css";
-import Homepage from "../app/(general)/homepage/page"
 
 export default function Home() {
   return (
     <main className={styles.main}>
-      <Homepage/>
+      <Login />
     </main>
   );
 }

@@ -4,15 +4,15 @@ import Link from "next/link";
 import Image from "next/image";
 import Logo from "@/public/icons/logo.png";
 import HomeIcon from "@mui/icons-material/Home";
-import { useAuthContext } from "@/app/shared/contexts/AuthContext"; 
+import { useAuthContext } from "@/app/shared/contexts/Auth/AuthContext";
 
-export default function Navbar() {
+const Navbar = () => {
   const { user } = useAuthContext();
 
   return (
     <div className={styles.container}>
       <div className={styles.toplevel}>
-        <Link href="/">
+        <Link href="/home">
           <Image src={Logo} alt="navLogo" className={styles.logoImg} />
         </Link>
         <nav className={styles.navbar}>
@@ -24,10 +24,18 @@ export default function Navbar() {
           </div>
 
           <div className={styles.navright}>
-            {user ? <p>{user.name}</p> : <Link href="/login"><p>Login</p></Link>}
+            {user ? (
+              <p>{user.name}</p>
+            ) : (
+              <Link href="/login">
+                <p>Login</p>
+              </Link>
+            )}
           </div>
         </nav>
       </div>
     </div>
   );
-}
+};
+
+export default Navbar;
