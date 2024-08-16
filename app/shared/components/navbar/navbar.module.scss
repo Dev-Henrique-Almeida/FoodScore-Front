@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #E1523D;
+    background-color: #e1533d;
     padding: 10px;
 }
 
@@ -43,11 +43,30 @@
 }
 
 .navright {
-    display: flex;
+    display: flex; 
     align-items: center;
     justify-content: flex-end;
     margin-left: auto;
     color: white;
     margin-right: 2%;
+    gap: 8px; 
     cursor: pointer;
 }
+
+.logoutButton {
+    background-color: transparent;
+    border: 2px solid white;
+    color: white;
+    padding: 8px 16px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 8px; 
+    transition: background-color 0.3s, color 0.3s;
+    border-radius: 20px;
+  
+    &:hover {
+      background-color: white;
+      color: #E1523D; 
+    }
+  }
+  

@@ -11,7 +11,6 @@ import { createUser, loginUser } from "@/app/shared/service";
 export default function Register() {
   const router = useRouter();
   const { formData, handleChange } = useHandleChangeUser();
-
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const { user, setUser, setToken } = useAuthContext();
@@ -22,9 +21,7 @@ export default function Register() {
     }
   }, [user, router]);
 
-  const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
-  ): Promise<void> => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
 
     const { id, ...dataToSend } = formData;
@@ -39,13 +36,14 @@ export default function Register() {
       setUser(loginData.user);
       setToken(loginData.token);
 
-      setSuccess("Registro realizado com sucesso!");
+      alert("Registro realizado com sucesso!");
       router.push("/home");
     } catch (err) {
       setError("O registro falhou. Por favor, tente novamente.");
       setSuccess("");
     }
   };
+
   return (
     <div className={styles.topLevel}>
       <div className={styles.container}>
@@ -78,6 +76,68 @@ export default function Register() {
               required
               className={styles.input}
               value={formData.email}
+              onChange={handleChange}
+            />
+          </div>
+          <div className={styles.field}>
+            <label htmlFor="sex" className={styles.label}>
+              Sexo:
+            </label>
+            <select
+              id="sex"
+              name="sex"
+              required
+              className={styles.input}
+              value={formData.sex}
+              onChange={handleChange}
+            >
+              <option value="">Selecione</option>
+              <option value="Male">Masculino</option>
+              <option value="Female">Feminino</option>
+              <option value="Other">Outro</option>
+            </select>
+          </div>
+          <div className={styles.field}>
+            <label htmlFor="address" className={styles.label}>
+              Endereço:
+            </label>
+            <input
+              type="text"
+              id="address"
+              name="address"
+              placeholder="Endereço"
+              required
+              className={styles.input}
+              value={formData.address}
+              onChange={handleChange}
+            />
+          </div>
+          <div className={styles.field}>
+            <label htmlFor="phone" className={styles.label}>
+              Telefone:
+            </label>
+            <input
+              type="text"
+              id="phone"
+              name="phone"
+              placeholder="Telefone"
+              required
+              className={styles.input}
+              value={formData.phone}
+              onChange={handleChange}
+            />
+          </div>
+          <div className={styles.field}>
+            <label htmlFor="birthdate" className={styles.label}>
+              Data de Nascimento:
+            </label>
+            <input
+              type="date"
+              id="birthdate"
+              name="birthdate"
+              required
+              className={styles.input}
+              value={formData.birthdate}
               onChange={handleChange}
             />
           </div>

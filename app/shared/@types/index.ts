@@ -4,6 +4,10 @@ interface IUserData {
   email: string;
   password: string;
   image?: string;
+  sex?: string;
+  address: string;
+  phone: string;
+  birthdate?: string;
 }
 
 interface ILoginData {
@@ -12,7 +16,7 @@ interface ILoginData {
 }
 
 interface IEventProps {
-  target: HTMLInputElement | HTMLTextAreaElement;
+  target: HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
 }
 
 interface IAuthContextData {

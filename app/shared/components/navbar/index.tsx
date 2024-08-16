@@ -2,12 +2,22 @@ import React from "react";
 import styles from "./navbar.module.scss";
 import Link from "next/link";
 import Image from "next/image";
-import Logo from "@/public/icons/logo.png";
+import Logo from "@/public/icons/logo_transparent.png";
 import HomeIcon from "@mui/icons-material/Home";
 import { useAuthContext } from "@/app/shared/contexts/Auth/AuthContext";
+import { useRouter } from "next/navigation";
+
 
 const Navbar = () => {
-  const { user } = useAuthContext();
+  const { user, setUser, setToken } = useAuthContext();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    setUser(null);
+    setToken(null);
+    localStorage.clear(); 
+    router.push("/login"); 
+  };
 
   return (
     <div className={styles.container}>
@@ -25,7 +35,12 @@ const Navbar = () => {
 
           <div className={styles.navright}>
             {user ? (
-              <p>{user.name}</p>
+              <>
+                <p>{user.name}</p>
+                <button onClick={handleLogout} className={styles.logoutButton}>
+                  Sair
+                </button>
+              </>
             ) : (
               <Link href="/login">
                 <p>Login</p>

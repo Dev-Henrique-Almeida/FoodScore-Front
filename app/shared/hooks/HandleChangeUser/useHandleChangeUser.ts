@@ -9,6 +9,10 @@ const useHandleChangeUser = (initialData: Partial<IUserData> = {}) => {
     email: "",
     password: "",
     image: "",
+    sex: "",
+    address: "",
+    phone: "",
+    birthdate: "",
     ...initialData,
   });
 
