@@ -2,13 +2,17 @@
 
 import React, { useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import styles from "./login.module.scss";
 import Link from "next/link";
+import { useAuthContext } from "@/app/shared/contexts/AuthContext";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const { setUser, setToken } = useAuthContext();
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -18,11 +22,22 @@ export default function Login() {
         password,
       });
       console.log(response.data);
-      // Handle successful login
+      const { data, token } = response.data; 
+      const user = {
+        id: data.id,
+        name: data.name,
+        email: data.email,
+      };
+
+      setUser(user);
+      setToken(token);
+
+      router.push("/");
     } catch (err) {
       setError("Login falhou. Por favor, tente novamente.");
     }
   };
+
   return (
     <div className={styles.topLevel}>
       <div className={styles.container}>
@@ -69,7 +84,9 @@ export default function Login() {
             </div>
 
             <div className={styles.register}>
-              <Link href="/register" className={styles.regiterLink}>Registre-se</Link>
+              <Link href="/register" className={styles.regiterLink}>
+                Registre-se
+              </Link>
             </div>
           </div>
         </form>
