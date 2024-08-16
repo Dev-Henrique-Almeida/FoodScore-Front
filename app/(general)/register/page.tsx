@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../login/login.module.scss";
 import Link from "next/link";
 import { createUser, loginUser } from "@/app/shared/service/UserApi";
@@ -14,7 +14,13 @@ export default function Register() {
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const { setUser, setToken } = useAuthContext();
+  const { user, setUser, setToken } = useAuthContext();
+
+  useEffect(() => {
+    if (user) {
+      router.push("/home");
+    }
+  }, [user, router]);
 
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./login.module.scss";
 import Link from "next/link";
@@ -12,7 +12,13 @@ export default function Login() {
   const router = useRouter();
   const { formData, handleChange } = useHandleChangeUser();
   const [error, setError] = useState("");
-  const { setUser, setToken } = useAuthContext();
+  const { user, setUser, setToken } = useAuthContext();
+
+  useEffect(() => {
+    if (user) {
+      router.push("/home");
+    }
+  }, [user, router]);
 
   const handleSubmit = async (
     e: React.FormEvent<HTMLFormElement>
