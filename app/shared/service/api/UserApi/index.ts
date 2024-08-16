@@ -1,4 +1,4 @@
-import { ILoginData, IUserData } from "../../@types";
+import { ILoginData, IUserData } from "@/app/shared/@types";
 import { api, configHeaders } from "../api";
 
 export const createUser = async (userData: IUserData) => {

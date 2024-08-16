@@ -4,9 +4,9 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./login.module.scss";
 import Link from "next/link";
-import { useAuthContext } from "@/app/shared/contexts/Auth/AuthContext";
 import useHandleChangeUser from "@/app/shared/hooks/HandleChangeUser/useHandleChangeUser";
-import { loginUser } from "@/app/shared/service/UserApi";
+import { useAuthContext } from "@/app/shared/contexts";
+import { loginUser } from "@/app/shared/service";
 
 export default function Login() {
   const router = useRouter();

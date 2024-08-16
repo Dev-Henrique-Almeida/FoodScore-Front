@@ -3,10 +3,10 @@
 import React, { useEffect, useState } from "react";
 import styles from "../login/login.module.scss";
 import Link from "next/link";
-import { createUser, loginUser } from "@/app/shared/service/UserApi";
-import { useAuthContext } from "@/app/shared/contexts/Auth/AuthContext";
 import { useRouter } from "next/navigation";
 import useHandleChangeUser from "@/app/shared/hooks/HandleChangeUser/useHandleChangeUser";
+import { useAuthContext } from "@/app/shared/contexts";
+import { createUser, loginUser } from "@/app/shared/service";
 
 export default function Register() {
   const router = useRouter();

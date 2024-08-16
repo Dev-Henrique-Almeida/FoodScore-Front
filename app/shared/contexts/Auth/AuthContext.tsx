@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { IAuthContextData, IChildrenProps, IUserData } from "../../@types";
-import { localStorageUtils } from "../../utils/LocalStorageUtils/localStorageUtils";
+import { localStorageUtils } from "../../utils";
 
 const AuthContext = createContext({} as IAuthContextData);
 
