@@ -9,7 +9,8 @@ import { useAuthContext } from "@/app/shared/contexts";
 import { createUser, loginUser } from "@/app/shared/service";
 import TextInput from "@/app/shared/components/inputs/TextInput/index";
 import PasswordInput from "@/app/shared/components/inputs/PasswordInput/index";
-import MaskedInput from "@/app/shared/components/inputs/MaskedInput/index";
+import CustomMaskedInput from "@/app/shared/components/inputs/MaskedInput/index";
+import { phoneMask } from "@/app/shared/utils/masks/masks";
 
 export default function Register() {
   const router = useRouter();
@@ -103,14 +104,14 @@ export default function Register() {
             value={formData.address}
             onChange={handleChange}
           />
-          <MaskedInput
+          <CustomMaskedInput
             id="phone"
             name="phone"
             placeholder="(11) 98765-4321"
             label="Telefone"
             value={formData.phone}
             onChange={handleChange}
-            mask="(99) 99999-9999"
+            mask={phoneMask}
           />
           <TextInput
             id="birthdate"

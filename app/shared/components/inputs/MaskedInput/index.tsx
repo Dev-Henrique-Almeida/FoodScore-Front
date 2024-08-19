@@ -1,19 +1,22 @@
-import React from "react";
-import InputMask from "react-input-mask";
+import React, { useState, ChangeEvent } from "react";
 import styles from "@/app/(general)/register/register.module.scss";
 
-interface MaskedInputProps {
+interface CustomMaskedInputProps {
   id: string;
   name: string;
   placeholder: string;
   required?: boolean;
   value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   label: string;
-  mask: string;
+  mask: (value: string) => string;
 }
 
-export default function MaskedInput({
+const applyMask = (value: string, mask: (value: string) => string): string => {
+  return mask(value);
+};
+
+export default function CustomMaskedInput({
   id,
   name,
   placeholder,
@@ -22,21 +25,28 @@ export default function MaskedInput({
   onChange,
   label,
   mask,
-}: MaskedInputProps) {
+}: CustomMaskedInputProps) {
+  const [maskedValue, setMaskedValue] = useState(() => applyMask(value, mask));
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    setMaskedValue(applyMask(newValue, mask));
+    onChange(e);
+  };
+
   return (
     <div className={styles.field}>
       <label htmlFor={id} className={styles.label}>
         {label}:
       </label>
-      <InputMask
-        mask={mask}
+      <input
         id={id}
         name={name}
         placeholder={placeholder}
         required={required}
         className={styles.input}
-        value={value}
-        onChange={onChange}
+        value={maskedValue}
+        onChange={handleChange}
       />
     </div>
   );

@@ -15,12 +15,15 @@
     "@mantine/hooks": "^7.12.1",
     "@mui/icons-material": "^5.16.7",
     "@mui/material": "^5.16.7",
+    "@react-input/mask": "^1.2.5",
     "axios": "^1.7.4",
     "jwt-decode": "^4.0.0",
     "next": "14.2.5",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.52.2",
     "react-input-mask": "^2.0.4",
+    "react-text-mask": "^5.5.0",
     "sass": "^1.77.8"
   },
   "devDependencies": {
@@ -28,6 +31,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/react-input-mask": "^3.0.5",
+    "@types/react-text-mask": "^5.4.14",
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
     "typescript": "^5"
