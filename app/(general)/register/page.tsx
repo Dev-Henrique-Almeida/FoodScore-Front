@@ -7,13 +7,14 @@ import { useRouter } from "next/navigation";
 import useHandleChangeUser from "@/app/shared/hooks/HandleChangeUser/useHandleChangeUser";
 import { useAuthContext } from "@/app/shared/contexts";
 import { createUser, loginUser } from "@/app/shared/service";
+import InputMask from "react-input-mask";
 
 export default function Register() {
   const router = useRouter();
   const { formData, handleChange } = useHandleChangeUser();
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState(""); // Estado para confirmar senha
+  const [confirmPassword, setConfirmPassword] = useState("");
   const { user, setUser, setToken } = useAuthContext();
 
   useEffect(() => {
@@ -22,7 +23,9 @@ export default function Register() {
     }
   }, [user, router]);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     e.preventDefault();
 
     // Validação da confirmação de senha
@@ -82,6 +85,7 @@ export default function Register() {
               placeholder="Email"
               required
               className={styles.input}
+              pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
               value={formData.email}
               onChange={handleChange}
             />
@@ -123,11 +127,11 @@ export default function Register() {
             <label htmlFor="phone" className={styles.label}>
               Telefone:
             </label>
-            <input
-              type="text"
+            <InputMask
+              mask="(99) 99999-9999"
               id="phone"
               name="phone"
-              placeholder="Telefone"
+              placeholder="(11) 98765-4321"
               required
               className={styles.input}
               value={formData.phone}
