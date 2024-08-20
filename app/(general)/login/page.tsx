@@ -25,7 +25,6 @@ export default function Login() {
   ): Promise<void> => {
     e.preventDefault();
 
-    // Apenas os campos necessários para o login
     const { email, password } = formData;
     const dataToSend = { email, password };
 

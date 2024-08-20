@@ -1,18 +1,23 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import styles from "../login/login.module.scss";
+import styles from "./register.module.scss";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import useHandleChangeUser from "@/app/shared/hooks/HandleChangeUser/useHandleChangeUser";
 import { useAuthContext } from "@/app/shared/contexts";
 import { createUser, loginUser } from "@/app/shared/service";
+import TextInput from "@/app/shared/components/inputs/TextInput/index";
+import PasswordInput from "@/app/shared/components/inputs/PasswordInput/index";
+import CustomMaskedInput from "@/app/shared/components/inputs/MaskedInput/index";
+import { phoneMask } from "@/app/shared/utils/masks/masks";
 
 export default function Register() {
   const router = useRouter();
   const { formData, handleChange } = useHandleChangeUser();
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const { user, setUser, setToken } = useAuthContext();
 
   useEffect(() => {
@@ -21,8 +26,15 @@ export default function Register() {
     }
   }, [user, router]);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+  const handleSubmit = async (
+    e: React.FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     e.preventDefault();
+
+    if (formData.password !== confirmPassword) {
+      setError("As senhas não coincidem. Tente novamente.");
+      return;
+    }
 
     const { id, ...dataToSend } = formData;
 
@@ -49,36 +61,23 @@ export default function Register() {
       <div className={styles.container}>
         <h1 className={styles.title}>Registro</h1>
         <form className={styles.form} onSubmit={handleSubmit}>
-          <div className={styles.field}>
-            <label htmlFor="name" className={styles.label}>
-              Nome:
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              placeholder="Nome"
-              required
-              className={styles.input}
-              value={formData.name}
-              onChange={handleChange}
-            />
-          </div>
-          <div className={styles.field}>
-            <label htmlFor="email" className={styles.label}>
-              Email:
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Email"
-              required
-              className={styles.input}
-              value={formData.email}
-              onChange={handleChange}
-            />
-          </div>
+          <TextInput
+            id="name"
+            name="name"
+            placeholder="Nome"
+            label="Nome"
+            value={formData.name}
+            onChange={handleChange}
+          />
+          <TextInput
+            id="email"
+            name="email"
+            placeholder="Email"
+            label="Email"
+            value={formData.email}
+            onChange={handleChange}
+            type="email"
+          />
           <div className={styles.field}>
             <label htmlFor="sex" className={styles.label}>
               Sexo:
@@ -97,65 +96,49 @@ export default function Register() {
               <option value="Other">Outro</option>
             </select>
           </div>
-          <div className={styles.field}>
-            <label htmlFor="address" className={styles.label}>
-              Endereço:
-            </label>
-            <input
-              type="text"
-              id="address"
-              name="address"
-              placeholder="Endereço"
-              required
-              className={styles.input}
-              value={formData.address}
-              onChange={handleChange}
-            />
-          </div>
-          <div className={styles.field}>
-            <label htmlFor="phone" className={styles.label}>
-              Telefone:
-            </label>
-            <input
-              type="text"
-              id="phone"
-              name="phone"
-              placeholder="Telefone"
-              required
-              className={styles.input}
-              value={formData.phone}
-              onChange={handleChange}
-            />
-          </div>
-          <div className={styles.field}>
-            <label htmlFor="birthdate" className={styles.label}>
-              Data de Nascimento:
-            </label>
-            <input
-              type="date"
-              id="birthdate"
-              name="birthdate"
-              required
-              className={styles.input}
-              value={formData.birthdate}
-              onChange={handleChange}
-            />
-          </div>
-          <div className={styles.field}>
-            <label htmlFor="password" className={styles.label}>
-              Senha:
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Senha"
-              required
-              className={styles.input}
-              value={formData.password}
-              onChange={handleChange}
-            />
-          </div>
+          <TextInput
+            id="address"
+            name="address"
+            placeholder="Endereço"
+            label="Endereço"
+            value={formData.address}
+            onChange={handleChange}
+          />
+          <CustomMaskedInput
+            id="phone"
+            name="phone"
+            placeholder="(11) 98765-4321"
+            label="Telefone"
+            value={formData.phone}
+            onChange={handleChange}
+            mask={phoneMask}
+          />
+          <TextInput
+            id="birthdate"
+            name="birthdate"
+            placeholder=""
+            label="Data de Nascimento"
+            value={formData.birthdate ?? ""}
+            onChange={handleChange}
+            type="date"
+          />
+
+          <PasswordInput
+            id="password"
+            name="password"
+            placeholder="Senha"
+            label="Senha"
+            value={formData.password}
+            onChange={handleChange}
+          />
+          <PasswordInput
+            id="confirmPassword"
+            name="confirmPassword"
+            placeholder="Confirmar Senha"
+            label="Confirmar Senha"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
           <button type="submit" className={styles.buttonSubmmit}>
             Registrar
           </button>
