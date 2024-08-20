@@ -1,16 +1,17 @@
 "use client";
-import Search from "@/app/shared/components/searchHome/Search";
+import { useState } from "react";
+import Search from "@/app/shared/components/search";
 import styles from "./home.module.scss";
-import ConstructionIcon from "@mui/icons-material/Construction";
+import RestaurantContainer from "@/app/shared/components/restaurant/restaurantContainer";
 
 export default function Home() {
+  const [searchTerm, setSearchTerm] = useState("");
+
   return (
     <div className={styles.topLevel}>
-      <Search />
+      <Search onSearchChange={setSearchTerm} />
       <div className={styles.container}>
-        <h1>Bem vindo ao Food-Score</h1>
-        <p>A espera de um FIGMA para continuidades</p>
-        <ConstructionIcon />
+        <RestaurantContainer searchTerm={searchTerm} />
       </div>
     </div>
   );

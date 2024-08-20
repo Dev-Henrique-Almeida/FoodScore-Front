@@ -10,6 +10,16 @@ interface IUserData {
   birthdate?: string;
 }
 
+interface IRestaurantData {
+  id?: string;
+  name: string;
+  address: string;
+  phone: string;
+  image?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
 interface ILoginData {
   email: string;
   password: string;
@@ -54,6 +64,7 @@ interface ISelectProps {
 export type {
   IUserData,
   ISelectProps,
+  IRestaurantData,
   IInputProps,
   ILoginData,
   IEventProps,
