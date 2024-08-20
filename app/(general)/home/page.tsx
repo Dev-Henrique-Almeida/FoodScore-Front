@@ -1,16 +1,29 @@
 "use client";
+import { useState, useEffect } from "react";
+import Search from "@/app/shared/components/search";
 import styles from "./home.module.scss";
-import ConstructionIcon from "@mui/icons-material/Construction";
-import Search from "@/app/shared/components/homepage/Search";
+import RestaurantContainer from "@/app/shared/components/restaurant/restaurantContainer";
+import { ListRestaurants } from "@/app/shared/service";
+import { IRestaurantData } from "@/app/shared/@types";
 
 export default function Home() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [restaurants, setRestaurants] = useState<IRestaurantData[]>([]);
+
+  useEffect(() => {
+    const fetchRestaurants = async () => {
+      const fetchedRestaurants = await ListRestaurants();
+      setRestaurants(fetchedRestaurants);
+    };
+
+    fetchRestaurants();
+  }, []);
+
   return (
     <div className={styles.topLevel}>
-      <Search />
+      <Search onSearchChange={setSearchTerm} restaurants={restaurants} />
       <div className={styles.container}>
-        <h1>Bem vindo ao Food-Score</h1>
-        <p>A espera de um FIGMA para continuidades</p>
-        <ConstructionIcon />
+        <RestaurantContainer searchTerm={searchTerm} />
       </div>
     </div>
   );

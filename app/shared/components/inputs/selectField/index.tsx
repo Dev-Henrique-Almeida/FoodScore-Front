@@ -1,40 +1,36 @@
 import React from "react";
 import styles from "@/app/(general)/register/register.module.scss";
+import { ISelectProps } from "@/app/shared/@types";
 
-interface PasswordInputProps {
-  id: string;
-  name: string;
-  placeholder: string;
-  required?: boolean;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  label: string;
-}
-
-export default function PasswordInput({
+export default function SelectField({
   id,
   name,
-  placeholder,
   required = true,
   value,
   onChange,
   label,
-}: PasswordInputProps) {
+  options,
+}: ISelectProps) {
   return (
     <div className={styles.field}>
       <label htmlFor={id} className={styles.label}>
         {label}:
       </label>
-      <input
-        type="password"
+      <select
         id={id}
         name={name}
-        placeholder={placeholder}
         required={required}
         className={styles.input}
         value={value}
         onChange={onChange}
-      />
+      >
+        <option value="">Selecione</option>
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
     </div>
   );
 }

@@ -2,7 +2,6 @@
 
 import { usePathname } from "next/navigation";
 import Navbar from "../../components/navbar";
-import Footer from "../../components/footer";
 
 export default function ClientLayout({
   children,
@@ -16,7 +15,7 @@ export default function ClientLayout({
     <>
       {!isAuthPage && <Navbar />}
       {children}
-      {!isAuthPage && <Footer />}
+      {/*       {!isAuthPage && <Footer />} */}{" "}
     </>
   );
 }

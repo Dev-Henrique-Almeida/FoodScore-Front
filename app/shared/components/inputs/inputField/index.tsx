@@ -1,19 +1,8 @@
 import React from "react";
 import styles from "@/app/(general)/register/register.module.scss";
+import { IInputProps } from "@/app/shared/@types";
 
-interface TextInputProps {
-  id: string;
-  name: string;
-  placeholder: string;
-  required?: boolean;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  label: string;
-  type?: string;
-  pattern?: string;
-}
-
-export default function TextInput({
+export default function InputField({
   id,
   name,
   placeholder,
@@ -21,9 +10,8 @@ export default function TextInput({
   value,
   onChange,
   label,
-  type = "text",
-  pattern,
-}: TextInputProps) {
+  type,
+}: IInputProps) {
   return (
     <div className={styles.field}>
       <label htmlFor={id} className={styles.label}>
@@ -38,7 +26,6 @@ export default function TextInput({
         className={styles.input}
         value={value}
         onChange={onChange}
-        pattern={pattern}
       />
     </div>
   );

@@ -7,10 +7,10 @@ import { useRouter } from "next/navigation";
 import useHandleChangeUser from "@/app/shared/hooks/HandleChangeUser/useHandleChangeUser";
 import { useAuthContext } from "@/app/shared/contexts";
 import { createUser, loginUser } from "@/app/shared/service";
-import TextInput from "@/app/shared/components/inputs/TextInput/index";
-import PasswordInput from "@/app/shared/components/inputs/PasswordInput/index";
-import CustomMaskedInput from "@/app/shared/components/inputs/MaskedInput/index";
+import CustomMaskedInput from "@/app/shared/components/inputs/maskedInput/index";
 import { phoneMask } from "@/app/shared/utils/masks/masks";
+import InputField from "@/app/shared/components/inputs/inputField/index";
+import SelectField from "@/app/shared/components/inputs/selectField";
 
 export default function Register() {
   const router = useRouter();
@@ -61,15 +61,16 @@ export default function Register() {
       <div className={styles.container}>
         <h1 className={styles.title}>Registro</h1>
         <form className={styles.form} onSubmit={handleSubmit}>
-          <TextInput
+          <InputField
             id="name"
             name="name"
             placeholder="Nome"
+            type="text"
             label="Nome"
             value={formData.name}
             onChange={handleChange}
           />
-          <TextInput
+          <InputField
             id="email"
             name="email"
             placeholder="Email"
@@ -79,26 +80,23 @@ export default function Register() {
             type="email"
           />
           <div className={styles.field}>
-            <label htmlFor="sex" className={styles.label}>
-              Sexo:
-            </label>
-            <select
+            <SelectField
               id="sex"
               name="sex"
-              required
-              className={styles.input}
-              value={formData.sex}
+              label="Sexo"
+              value={formData.sex!}
               onChange={handleChange}
-            >
-              <option value="">Selecione</option>
-              <option value="Male">Masculino</option>
-              <option value="Female">Feminino</option>
-              <option value="Other">Outro</option>
-            </select>
+              options={[
+                { value: "Male", label: "Masculino" },
+                { value: "Female", label: "Feminino" },
+                { value: "Other", label: "Outro" },
+              ]}
+            />
           </div>
-          <TextInput
+          <InputField
             id="address"
             name="address"
+            type="text"
             placeholder="Endereço"
             label="Endereço"
             value={formData.address}
@@ -113,7 +111,7 @@ export default function Register() {
             onChange={handleChange}
             mask={phoneMask}
           />
-          <TextInput
+          <InputField
             id="birthdate"
             name="birthdate"
             placeholder=""
@@ -123,17 +121,19 @@ export default function Register() {
             type="date"
           />
 
-          <PasswordInput
+          <InputField
             id="password"
             name="password"
+            type="password"
             placeholder="Senha"
             label="Senha"
             value={formData.password}
             onChange={handleChange}
           />
-          <PasswordInput
+          <InputField
             id="confirmPassword"
             name="confirmPassword"
+            type="password"
             placeholder="Confirmar Senha"
             label="Confirmar Senha"
             value={confirmPassword}

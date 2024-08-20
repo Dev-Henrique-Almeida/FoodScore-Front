@@ -30,10 +30,10 @@ const Navbar = () => {
         </Link>
         <nav className={styles.navbar}>
           <div className={styles.navleft}>
-            <Link href="/" className={styles.navLink}>
+            {/*  <Link href="/" className={styles.navLink}>
               <HomeIcon />
               <span>Início</span>
-            </Link>
+            </Link> */}
           </div>
 
           <div className={styles.navright}>

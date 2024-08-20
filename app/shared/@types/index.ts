@@ -10,6 +10,16 @@ interface IUserData {
   birthdate?: string;
 }
 
+interface IRestaurantData {
+  id?: string;
+  name: string;
+  address: string;
+  phone: string;
+  image?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
 interface ILoginData {
   email: string;
   password: string;
@@ -30,8 +40,32 @@ interface IChildrenProps {
   children: React.ReactNode;
 }
 
+interface IInputProps {
+  id: string;
+  name: string;
+  type: string;
+  placeholder: string;
+  required?: boolean;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  label: string;
+}
+
+interface ISelectProps {
+  id: string;
+  name: string;
+  required?: boolean;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  label: string;
+  options: { value: string; label: string }[];
+}
+
 export type {
   IUserData,
+  ISelectProps,
+  IRestaurantData,
+  IInputProps,
   ILoginData,
   IEventProps,
   IAuthContextData,
