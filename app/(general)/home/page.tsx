@@ -1,7 +1,7 @@
 "use client";
+import Search from "@/app/shared/components/searchHome/Search";
 import styles from "./home.module.scss";
 import ConstructionIcon from "@mui/icons-material/Construction";
-import Search from "@/app/shared/components/homepage/Search";
 
 export default function Home() {
   return (

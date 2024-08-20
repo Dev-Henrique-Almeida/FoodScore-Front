@@ -1,6 +1,5 @@
 "use client";
 import Home from "./(general)/home/page";
-import Footer from "./shared/components/footer";
 import Navbar from "./shared/components/navbar";
 
 export default function Page() {
@@ -8,7 +7,6 @@ export default function Page() {
     <main>
       <Navbar />
       <Home />
-      <Footer />
     </main>
   );
 }

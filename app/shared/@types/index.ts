@@ -30,8 +30,20 @@ interface IChildrenProps {
   children: React.ReactNode;
 }
 
+interface IInputProps {
+  id: string;
+  name: string;
+  type: string;
+  placeholder: string;
+  required?: boolean;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  label: string;
+}
+
 export type {
   IUserData,
+  IInputProps,
   ILoginData,
   IEventProps,
   IAuthContextData,
