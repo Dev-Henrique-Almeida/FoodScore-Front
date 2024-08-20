@@ -11,9 +11,6 @@ const RestaurantContainer: React.FC<RestaurantContainerProps> = ({
   searchTerm,
 }) => {
   const [restaurants, setRestaurants] = useState<IRestaurantData[]>([]);
-  const [filteredRestaurants, setFilteredRestaurants] = useState<
-    IRestaurantData[]
-  >([]);
 
   useEffect(() => {
     const fetchRestaurants = async () => {
@@ -25,7 +22,6 @@ const RestaurantContainer: React.FC<RestaurantContainerProps> = ({
             new Date(a.createdAt || "").getTime()
         );
         setRestaurants(sortedRestaurants);
-        setFilteredRestaurants(sortedRestaurants);
       } catch (error) {
         console.error("Erro ao buscar restaurantes:", error);
       }
@@ -34,14 +30,7 @@ const RestaurantContainer: React.FC<RestaurantContainerProps> = ({
     fetchRestaurants();
   }, []);
 
-  useEffect(() => {
-    const filtered = restaurants.filter((restaurant) =>
-      restaurant.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setFilteredRestaurants(filtered);
-  }, [searchTerm, restaurants]);
-
-  return <Restaurants restaurants={filteredRestaurants} />;
+  return <Restaurants restaurants={restaurants} />;
 };
 
 export default RestaurantContainer;

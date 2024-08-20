@@ -6,22 +6,22 @@ interface RestaurantsProps {
 }
 
 const Restaurants: React.FC<RestaurantsProps> = ({ restaurants }) => {
+  if (restaurants.length === 0) {
+    return <p>Nenhum restaurante encontrado.</p>;
+  }
+
   return (
     <div>
-      {restaurants.length > 0 ? (
-        restaurants.map((restaurant) => (
-          <div key={restaurant.id}>
-            <h2>{restaurant.name}</h2>
-            <p>{restaurant.address}</p>
-            <p>{restaurant.phone}</p>
-            {restaurant.image && (
-              <img src={restaurant.image} alt={restaurant.name} />
-            )}
-          </div>
-        ))
-      ) : (
-        <p>Nenhum restaurante cadastrado.</p>
-      )}
+      {restaurants.map((restaurant) => (
+        <div key={restaurant.id}>
+          <h2>{restaurant.name}</h2>
+          <p>{restaurant.address}</p>
+          <p>{restaurant.phone}</p>
+          {restaurant.image && (
+            <img src={restaurant.image} alt={restaurant.name} />
+          )}
+        </div>
+      ))}
     </div>
   );
 };

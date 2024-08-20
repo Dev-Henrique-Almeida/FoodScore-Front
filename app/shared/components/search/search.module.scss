@@ -2,18 +2,18 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url("/walpapperHome.jpeg"); 
+  background-image: url("/walpapperHome.jpeg");
   background-size: cover;
   background-position: center;
-  height: 350px; 
+  height: 350px;
   padding: 20px;
   width: 100%;
 
   .searchInput {
     width: 1004px;
-    height: 72px;
+    height: 60px;
     border-radius: 40px;
-    background: #fafafa; 
+    background: #fafafa;
     border: none;
     padding: 0 20px;
     font-size: 18px;
