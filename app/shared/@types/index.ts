@@ -41,8 +41,19 @@ interface IInputProps {
   label: string;
 }
 
+interface ISelectProps {
+  id: string;
+  name: string;
+  required?: boolean;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  label: string;
+  options: { value: string; label: string }[];
+}
+
 export type {
   IUserData,
+  ISelectProps,
   IInputProps,
   ILoginData,
   IEventProps,

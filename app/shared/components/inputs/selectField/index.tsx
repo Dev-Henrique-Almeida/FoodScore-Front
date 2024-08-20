@@ -1,15 +1,6 @@
 import React from "react";
 import styles from "@/app/(general)/register/register.module.scss";
-
-interface SelectProps {
-  id: string;
-  name: string;
-  required?: boolean;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  label: string;
-  options: { value: string; label: string }[];
-}
+import { ISelectProps } from "@/app/shared/@types";
 
 export default function SelectField({
   id,
@@ -19,7 +10,7 @@ export default function SelectField({
   onChange,
   label,
   options,
-}: SelectProps) {
+}: ISelectProps) {
   return (
     <div className={styles.field}>
       <label htmlFor={id} className={styles.label}>
