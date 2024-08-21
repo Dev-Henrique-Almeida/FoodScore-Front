@@ -1,31 +1,22 @@
 import React, { useState, ChangeEvent } from "react";
 import styles from "@/app/(general)/register/register.module.scss";
+import { ICustomInputProps } from "@/app/shared/@types";
 
-interface CustomMaskedInputProps {
-  id: string;
-  name: string;
-  placeholder: string;
-  required?: boolean;
-  value: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  label: string;
-  mask: (value: string) => string;
-}
-
-const applyMask = (value: string, mask: (value: string) => string): string => {
-  return mask(value);
+const applyMask = (value: string, mask?: (value: string) => string): string => {
+  return mask ? mask(value) : value;
 };
 
-export default function CustomMaskedInput({
+export default function CustomInput({
   id,
   name,
   placeholder,
   required = true,
   value,
   onChange,
+  type,
   label,
   mask,
-}: CustomMaskedInputProps) {
+}: ICustomInputProps) {
   const [maskedValue, setMaskedValue] = useState(() => applyMask(value, mask));
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -41,6 +32,7 @@ export default function CustomMaskedInput({
       </label>
       <input
         id={id}
+        type={type}
         name={name}
         placeholder={placeholder}
         required={required}

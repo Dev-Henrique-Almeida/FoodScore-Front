@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
 import styles from "./register.module.scss";
 import Link from "next/link";
@@ -7,10 +6,9 @@ import { useRouter } from "next/navigation";
 import useHandleChangeUser from "@/app/shared/hooks/HandleChangeUser/useHandleChangeUser";
 import { useAuthContext } from "@/app/shared/contexts";
 import { createUser, loginUser } from "@/app/shared/service";
-import CustomMaskedInput from "@/app/shared/components/inputs/maskedInput/index";
-import { phoneMask } from "@/app/shared/utils/masks/masks";
-import InputField from "@/app/shared/components/inputs/inputField/index";
-import SelectField from "@/app/shared/components/inputs/selectField";
+import { phoneMask } from "@/app/shared/utils/Masks/masks";
+import CustomInput from "@/app/shared/components/inputs/customInput/index";
+import CustomSelect from "@/app/shared/components/inputs/customSelect";
 
 export default function Register() {
   const router = useRouter();
@@ -61,7 +59,7 @@ export default function Register() {
       <div className={styles.container}>
         <h1 className={styles.title}>Registro</h1>
         <form className={styles.form} onSubmit={handleSubmit}>
-          <InputField
+          <CustomInput
             id="name"
             name="name"
             placeholder="Nome"
@@ -70,7 +68,7 @@ export default function Register() {
             value={formData.name}
             onChange={handleChange}
           />
-          <InputField
+          <CustomInput
             id="email"
             name="email"
             placeholder="Email"
@@ -79,21 +77,19 @@ export default function Register() {
             onChange={handleChange}
             type="email"
           />
-          <div className={styles.field}>
-            <SelectField
-              id="sex"
-              name="sex"
-              label="Sexo"
-              value={formData.sex!}
-              onChange={handleChange}
-              options={[
-                { value: "Male", label: "Masculino" },
-                { value: "Female", label: "Feminino" },
-                { value: "Other", label: "Outro" },
-              ]}
-            />
-          </div>
-          <InputField
+          <CustomSelect
+            id="sex"
+            name="sex"
+            label="Sexo"
+            value={formData.sex!}
+            onChange={handleChange}
+            options={[
+              { value: "Male", label: "Masculino" },
+              { value: "Female", label: "Feminino" },
+              { value: "Other", label: "Outro" },
+            ]}
+          />
+          <CustomInput
             id="address"
             name="address"
             type="text"
@@ -102,16 +98,17 @@ export default function Register() {
             value={formData.address}
             onChange={handleChange}
           />
-          <CustomMaskedInput
+          <CustomInput
             id="phone"
             name="phone"
             placeholder="(11) 98765-4321"
             label="Telefone"
             value={formData.phone}
             onChange={handleChange}
+            type="phone"
             mask={phoneMask}
           />
-          <InputField
+          <CustomInput
             id="birthdate"
             name="birthdate"
             placeholder=""
@@ -121,7 +118,7 @@ export default function Register() {
             type="date"
           />
 
-          <InputField
+          <CustomInput
             id="password"
             name="password"
             type="password"
@@ -130,7 +127,7 @@ export default function Register() {
             value={formData.password}
             onChange={handleChange}
           />
-          <InputField
+          <CustomInput
             id="confirmPassword"
             name="confirmPassword"
             type="password"

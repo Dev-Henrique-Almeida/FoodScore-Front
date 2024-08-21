@@ -1,8 +1,8 @@
 import React from "react";
 import styles from "@/app/(general)/register/register.module.scss";
-import { ISelectProps } from "@/app/shared/@types";
+import { ICustomSelectProps } from "@/app/shared/@types";
 
-export default function SelectField({
+export default function CustomSelect({
   id,
   name,
   required = true,
@@ -10,7 +10,7 @@ export default function SelectField({
   onChange,
   label,
   options,
-}: ISelectProps) {
+}: ICustomSelectProps) {
   return (
     <div className={styles.field}>
       <label htmlFor={id} className={styles.label}>

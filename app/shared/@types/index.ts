@@ -40,18 +40,19 @@ interface IChildrenProps {
   children: React.ReactNode;
 }
 
-interface IInputProps {
+interface ICustomInputProps {
   id: string;
   name: string;
-  type: string;
   placeholder: string;
   required?: boolean;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   label: string;
+  type: string;
+  mask?: (value: string) => string;
 }
 
-interface ISelectProps {
+interface ICustomSelectProps {
   id: string;
   name: string;
   required?: boolean;
@@ -63,9 +64,9 @@ interface ISelectProps {
 
 export type {
   IUserData,
-  ISelectProps,
+  ICustomSelectProps,
   IRestaurantData,
-  IInputProps,
+  ICustomInputProps,
   ILoginData,
   IEventProps,
   IAuthContextData,
