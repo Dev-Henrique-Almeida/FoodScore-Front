@@ -8,3 +8,12 @@ export const ListRestaurants = async () => {
     throw error;
   }
 };
+
+export const getRestaurantById = async (id: string) => {
+  try {
+    const response = await api.get(`/restaurants/${id}`, configHeaders);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Autocomplete, TextField, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import { IRestaurantData } from "@/app/shared/@types";
@@ -11,6 +12,7 @@ interface SearchProps {
 
 export default function Search({ onSearchChange, restaurants }: SearchProps) {
   const [inputValue, setInputValue] = useState("");
+  const router = useRouter();
 
   const handleInputChange = (
     event: React.SyntheticEvent,
@@ -22,12 +24,28 @@ export default function Search({ onSearchChange, restaurants }: SearchProps) {
     }
   };
 
+  const handleSelectionChange = (
+    event: React.SyntheticEvent,
+    value: string | null
+  ) => {
+    if (value !== null) {
+      const selectedRestaurant = restaurants.find(
+        (restaurant) => restaurant.name === value
+      );
+      if (selectedRestaurant) {
+        // chamando a rota de detalhes do restaurante
+        router.push(`/restaurant/${selectedRestaurant.id}`);
+      }
+    }
+  };
+
   return (
     <div className={styles.searchSection}>
       <Autocomplete
         freeSolo
         options={restaurants.map((restaurant) => restaurant.name)}
         onInputChange={handleInputChange}
+        onChange={handleSelectionChange}
         renderInput={(params) => (
           <TextField
             {...params}

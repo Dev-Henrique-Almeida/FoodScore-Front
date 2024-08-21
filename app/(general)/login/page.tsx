@@ -7,6 +7,7 @@ import Link from "next/link";
 import useHandleChangeUser from "@/app/shared/hooks/HandleChangeUser/useHandleChangeUser";
 import { useAuthContext } from "@/app/shared/contexts";
 import { loginUser } from "@/app/shared/service";
+import CustomInput from "@/app/shared/components/inputs/customInput";
 
 export default function Login() {
   const router = useRouter();
@@ -43,36 +44,26 @@ export default function Login() {
       <div className={styles.container}>
         <h1 className={styles.title}>Login</h1>
         <form className={styles.form} onSubmit={handleSubmit}>
-          <div className={styles.field}>
-            <label htmlFor="email" className={styles.label}>
-              Email:
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              placeholder="Email"
-              required
-              className={styles.input}
-              value={formData.email}
-              onChange={handleChange}
-            />
-          </div>
-          <div className={styles.field}>
-            <label htmlFor="password" className={styles.label}>
-              Senha:
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Senha"
-              required
-              className={styles.input}
-              value={formData.password}
-              onChange={handleChange}
-            />
-          </div>
+          <CustomInput
+            type="email"
+            id="email"
+            label="Email"
+            name="email"
+            placeholder="Email"
+            required
+            value={formData.email}
+            onChange={handleChange}
+          />
+          <CustomInput
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Senha"
+            label="Senha"
+            required
+            value={formData.password}
+            onChange={handleChange}
+          />
           <button type="submit" className={styles.buttonSubmmit}>
             Login
           </button>

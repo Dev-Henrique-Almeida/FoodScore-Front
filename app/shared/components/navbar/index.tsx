@@ -3,13 +3,10 @@ import styles from "./navbar.module.scss";
 import Link from "next/link";
 import Image from "next/image";
 import Logo from "@/public/icons/logo_transparent.png";
-import HomeIcon from "@mui/icons-material/Home";
 import { useAuthContext } from "@/app/shared/contexts/Auth/AuthContext";
-import { useRouter } from "next/navigation";
 
 const Navbar = () => {
   const { user, setUser, setToken } = useAuthContext();
-  const router = useRouter();
 
   const handleLogout = () => {
     const confirmed = window.confirm("Você realmente deseja sair?");
@@ -18,7 +15,6 @@ const Navbar = () => {
       setUser(null);
       setToken(null);
       localStorage.clear();
-      router.push("/login");
     }
   };
 
