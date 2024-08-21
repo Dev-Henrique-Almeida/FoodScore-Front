@@ -1,7 +1,7 @@
 import { IRestaurantData } from "@/app/shared/@types";
 import { ListRestaurants } from "@/app/shared/service";
 import { useEffect, useState } from "react";
-import Restaurants from "..";
+import Restaurants from "../RestaurantList";
 
 interface RestaurantContainerProps {
   searchTerm: string;
