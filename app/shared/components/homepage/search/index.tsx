@@ -62,7 +62,7 @@ export default function Search({ onSearchChange, restaurants }: SearchProps) {
               startAdornment: (
                 <InputAdornment position="start">
                   <SearchIcon />
-                </InputAdornment>
+                </InputAdornment>  
               ),
             }}
             variant="outlined"
