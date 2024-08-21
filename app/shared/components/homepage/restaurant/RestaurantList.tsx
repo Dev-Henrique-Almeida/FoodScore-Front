@@ -1,4 +1,5 @@
 import React from "react";
+import { useRouter } from "next/navigation";
 import { IRestaurantData } from "@/app/shared/@types";
 import styles from "./restaurantList.module.scss";
 
@@ -7,6 +8,17 @@ interface RestaurantListProps {
 }
 
 const RestaurantList: React.FC<RestaurantListProps> = ({ restaurants }) => {
+  const router = useRouter();
+
+  const handleCardClick = (
+    event: React.MouseEvent<HTMLDivElement>,
+    id: string | undefined
+  ) => {
+    if (id) {
+      router.push(`/restaurant/${id}`);
+    }
+  };
+
   if (restaurants.length === 0) {
     return <p>Nenhum restaurante encontrado.</p>;
   }
@@ -18,7 +30,11 @@ const RestaurantList: React.FC<RestaurantListProps> = ({ restaurants }) => {
       </h2>
       <div className={styles.restaurantGrid}>
         {restaurants.map((restaurant) => (
-          <div key={restaurant.id} className={styles.restaurantCard}>
+          <div
+            key={restaurant.id}
+            className={styles.restaurantCard}
+            onClick={(event) => handleCardClick(event, restaurant.id)}
+          >
             <img
               src={restaurant.image || "/restaurant_default.jpg"}
               alt={restaurant.name}
