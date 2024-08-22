@@ -1,16 +1,20 @@
 import React from "react";
 import { useRouter } from "next/navigation";
-import { IRestaurantData } from "@/app/shared/@types";
-import styles from "./restaurantList.module.scss";
+import { IDishData, IRestaurantData, IListData } from "@/app/shared/@types";
+import styles from "./listItems.module.scss";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
-interface RestaurantListProps {
-  restaurants: IRestaurantData[];
+interface ListItemsProps<T extends IListData> {
+  items: T[];
+  itemType: "restaurant" | "dish";
 }
 
-const RestaurantList: React.FC<RestaurantListProps> = ({ restaurants }) => {
+const ListItems = <T extends IListData>({
+  items,
+  itemType,
+}: ListItemsProps<T>) => {
   const router = useRouter();
 
   const isSmallScreen = useMediaQuery("(max-width: 768px)");
@@ -23,18 +27,31 @@ const RestaurantList: React.FC<RestaurantListProps> = ({ restaurants }) => {
     id: string | undefined
   ) => {
     if (id) {
-      router.push(`/restaurant/${id}`);
+      router.push(`/${itemType}/${id}`);
     }
   };
 
-  if (restaurants.length === 0) {
-    return <p>Nenhum restaurante encontrado.</p>;
+  const isRestaurant = (item: IListData): item is IRestaurantData => {
+    return itemType === "restaurant";
+  };
+
+  const isDish = (item: IListData): item is IDishData => {
+    return itemType === "dish";
+  };
+
+  if (items.length === 0) {
+    return (
+      <p>
+        Nenhum {itemType === "restaurant" ? "restaurante" : "prato"} encontrado.
+      </p>
+    );
   }
 
   return (
-    <div className={styles.restaurantListContainer}>
+    <div className={styles.listContainer}>
       <h2 className={styles.title}>
-        Relacionado aos restaurantes vistos por você
+        Relacionado aos {itemType === "restaurant" ? "restaurantes" : "pratos"}{" "}
+        vistos por você
       </h2>
       <Carousel
         className={styles.carouselContainer}
@@ -50,8 +67,8 @@ const RestaurantList: React.FC<RestaurantListProps> = ({ restaurants }) => {
         transitionTime={500}
         autoPlay={false}
         stopOnHover
-        centerMode={slidesToShow > 1} 
-        centerSlidePercentage={100 / slidesToShow} 
+        centerMode={slidesToShow > 1}
+        centerSlidePercentage={100 / slidesToShow}
         renderArrowNext={(onClickHandler, hasNext, label) =>
           hasNext && (
             <div
@@ -75,30 +92,29 @@ const RestaurantList: React.FC<RestaurantListProps> = ({ restaurants }) => {
           )
         }
       >
-        {restaurants.map((restaurant) => (
+        {items.map((item) => (
           <div
-            key={restaurant.id}
-            className={styles.restaurantCardWrapper}
+            key={item.id}
+            className={styles.cardWrapper}
             style={{ flex: `0 0 ${100 / slidesToShow}%` }}
           >
             <div
-              className={styles.restaurantCard}
-              onClick={(event) => handleCardClick(event, restaurant.id)}
+              className={styles.card}
+              onClick={(event) => handleCardClick(event, item.id)}
             >
               <img
-                src={restaurant.image || "/restaurant_default.jpg"}
-                alt={restaurant.name}
+                src={item.image || "/restaurant_default.jpg"}
+                alt={item.name}
                 title={
-                  restaurant.image
-                    ? ""
-                    : "Imagem padrão: A loja não inseriu uma foto própria."
+                  item.image ? "" : "Imagem padrão: Nenhuma foto disponível."
                 }
               />
-              <div className={styles.restaurantInfo}>
-                <h3>{restaurant.name}</h3>
-                <p>{restaurant.address}</p>
-                <p>{restaurant.phone}</p>
-                <div className={styles.restaurantRating}>
+              <div className={styles.info}>
+                <h3>{item.name}</h3>
+                {isRestaurant(item) && <p>{item.address}</p>}
+                {isRestaurant(item) && <p>{item.phone}</p>}
+                {isDish(item) && <p>{`Preço: R$ ${item.price}`}</p>}
+                <div className={styles.rating}>
                   {Array(5)
                     .fill("⭐")
                     .map((star, index) => (
@@ -115,4 +131,4 @@ const RestaurantList: React.FC<RestaurantListProps> = ({ restaurants }) => {
   );
 };
 
-export default RestaurantList;
+export default ListItems;

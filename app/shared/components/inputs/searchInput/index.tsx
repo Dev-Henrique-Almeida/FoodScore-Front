@@ -2,15 +2,15 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Autocomplete, TextField, InputAdornment } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { IRestaurantData } from "@/app/shared/@types";
+import { IDishData, IRestaurantData } from "@/app/shared/@types";
 import styles from "./search.module.scss";
 
 interface SearchProps {
   onSearchChange: (searchTerm: string) => void;
-  restaurants: IRestaurantData[];
+  search: IRestaurantData[] | IDishData[];
 }
 
-export default function Search({ onSearchChange, restaurants }: SearchProps) {
+export default function Search({ onSearchChange, search }: SearchProps) {
   const [inputValue, setInputValue] = useState("");
   const router = useRouter();
 
@@ -29,12 +29,13 @@ export default function Search({ onSearchChange, restaurants }: SearchProps) {
     value: string | null
   ) => {
     if (value !== null) {
-      const selectedRestaurant = restaurants.find(
-        (restaurant) => restaurant.name === value
-      );
-      if (selectedRestaurant) {
+      const selectedSearch = search.find((searchs) => searchs.name === value);
+      if (selectedSearch) {
         // chamando a rota de detalhes do restaurante
-        router.push(`/restaurant/${selectedRestaurant.id}`);
+        const itemType = (selectedSearch as IRestaurantData).address
+          ? "restaurant"
+          : "dish";
+        router.push(`/${itemType}/${selectedSearch.id}`);
       }
     }
   };
@@ -43,7 +44,7 @@ export default function Search({ onSearchChange, restaurants }: SearchProps) {
     <div className={styles.searchSection}>
       <Autocomplete
         freeSolo
-        options={restaurants.map((restaurant) => restaurant.name)}
+        options={search.map((searchs) => searchs.name)}
         onInputChange={handleInputChange}
         onChange={handleSelectionChange}
         renderInput={(params) => (
@@ -62,7 +63,7 @@ export default function Search({ onSearchChange, restaurants }: SearchProps) {
               startAdornment: (
                 <InputAdornment position="start">
                   <SearchIcon />
-                </InputAdornment>  
+                </InputAdornment>
               ),
             }}
             variant="outlined"
