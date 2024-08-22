@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@emotion/react": "^11.13.0",
+    "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@mantine/core": "^7.12.1",
     "@mantine/hooks": "^7.12.1",
@@ -23,6 +23,7 @@
     "react-dom": "^18",
     "react-hook-form": "^7.52.2",
     "react-input-mask": "^2.0.4",
+    "react-responsive-carousel": "^3.2.23",
     "react-slick": "^0.30.2",
     "react-text-mask": "^5.5.0",
     "sass": "^1.77.8",
@@ -37,7 +38,7 @@
     "@types/react-slick": "^0.23.13",
     "@types/react-text-mask": "^5.4.14",
     "eslint": "^8",
-    "eslint-config-next": "14.2.5",
+    "eslint-config-next": "^0.2.4",
     "typescript": "^5"
   }
 }

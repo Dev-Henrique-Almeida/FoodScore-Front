@@ -4,4 +4,4 @@ export * from "./homepage/search";
 export * from "./inputs/customInput";
 export * from "./inputs/customSelect";
 export * from "./homepage/restaurant/restaurantContainer";
-export * from "./homepage/restaurant/index";
+export * from "./homepage/restaurant/RestaurantList";
