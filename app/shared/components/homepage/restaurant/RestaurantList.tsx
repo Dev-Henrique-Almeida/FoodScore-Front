@@ -4,6 +4,7 @@ import { IRestaurantData } from "@/app/shared/@types";
 import styles from "./restaurantList.module.scss";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 interface RestaurantListProps {
   restaurants: IRestaurantData[];
@@ -11,6 +12,11 @@ interface RestaurantListProps {
 
 const RestaurantList: React.FC<RestaurantListProps> = ({ restaurants }) => {
   const router = useRouter();
+
+  const isSmallScreen = useMediaQuery("(max-width: 768px)");
+  const isMediumScreen = useMediaQuery("(max-width: 1024px)");
+
+  const slidesToShow = isSmallScreen ? 1 : isMediumScreen ? 2 : 3;
 
   const handleCardClick = (
     event: React.MouseEvent<HTMLDivElement>,
@@ -31,12 +37,11 @@ const RestaurantList: React.FC<RestaurantListProps> = ({ restaurants }) => {
         Relacionado aos restaurantes vistos por você
       </h2>
       <Carousel
+        className={styles.carouselContainer}
         showThumbs={false}
         showStatus={false}
         infiniteLoop
         useKeyboardArrows
-        centerMode
-        centerSlidePercentage={30} 
         swipeable
         emulateTouch
         dynamicHeight={false}
@@ -45,6 +50,8 @@ const RestaurantList: React.FC<RestaurantListProps> = ({ restaurants }) => {
         transitionTime={500}
         autoPlay={false}
         stopOnHover
+        centerMode={slidesToShow > 1} 
+        centerSlidePercentage={100 / slidesToShow} 
         renderArrowNext={(onClickHandler, hasNext, label) =>
           hasNext && (
             <div
@@ -52,7 +59,7 @@ const RestaurantList: React.FC<RestaurantListProps> = ({ restaurants }) => {
               onClick={onClickHandler}
               title={label}
             >
-              ▶
+              ▷
             </div>
           )
         }
@@ -72,6 +79,7 @@ const RestaurantList: React.FC<RestaurantListProps> = ({ restaurants }) => {
           <div
             key={restaurant.id}
             className={styles.restaurantCardWrapper}
+            style={{ flex: `0 0 ${100 / slidesToShow}%` }}
           >
             <div
               className={styles.restaurantCard}
@@ -97,12 +105,8 @@ const RestaurantList: React.FC<RestaurantListProps> = ({ restaurants }) => {
                       <span key={index}>{star}</span>
                     ))}
                   <span className={styles.reviewCount}>100 avaliações</span>
-
                 </div>
               </div>
-            </div>
-            <div>
-              <p>teste</p>
             </div>
           </div>
         ))}
