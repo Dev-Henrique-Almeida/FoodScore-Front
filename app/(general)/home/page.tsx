@@ -2,13 +2,12 @@
 import { useState, useEffect } from "react";
 import Search from "@/app/shared/components/homepage/search";
 import styles from "./home.module.scss";
-import RestaurantContainer from "@/app/shared/components/homepage/restaurant/restaurantContainer";
 import { ListRestaurants } from "@/app/shared/service";
 import { IRestaurantData } from "@/app/shared/@types";
 import RestaurantList from "@/app/shared/components/homepage/restaurant/RestaurantList";
 
 export default function Home() {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [, setSearchTerm] = useState("");
   const [restaurants, setRestaurants] = useState<IRestaurantData[]>([]);
 
   useEffect(() => {
