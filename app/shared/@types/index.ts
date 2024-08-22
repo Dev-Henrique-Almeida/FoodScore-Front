@@ -10,6 +10,16 @@ interface IUserData {
   birthdate?: string;
 }
 
+interface ICardProps {
+  item: IListData;
+  rating?: { averageRating: number; totalReviews: number };
+  onClick: (
+    event: React.MouseEvent<HTMLDivElement>,
+    id: string | undefined
+  ) => void;
+  itemType: "restaurant" | "dish";
+}
+
 interface ILoginData {
   email: string;
   password: string;
@@ -74,6 +84,7 @@ interface IDishData extends IListData {
 export type {
   IUserData,
   IListData,
+  ICardProps,
   IDishData,
   ICustomSelectProps,
   IRestaurantData,

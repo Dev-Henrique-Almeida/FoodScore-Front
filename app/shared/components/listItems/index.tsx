@@ -1,10 +1,12 @@
 import React from "react";
 import { useRouter } from "next/navigation";
-import { IDishData, IRestaurantData, IListData } from "@/app/shared/@types";
 import styles from "./listItems.module.scss";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { IListData } from "@/app/shared/@types";
+import useRatings from "../../hooks/Rating/useRatings";
+import CardList from "./cardList";
 
 interface ListItemsProps<T extends IListData> {
   items: T[];
@@ -16,11 +18,11 @@ const ListItems = <T extends IListData>({
   itemType,
 }: ListItemsProps<T>) => {
   const router = useRouter();
-
   const isSmallScreen = useMediaQuery("(max-width: 768px)");
   const isMediumScreen = useMediaQuery("(max-width: 1024px)");
-
   const slidesToShow = isSmallScreen ? 1 : isMediumScreen ? 2 : 3;
+
+  const ratings = useRatings(items, itemType);
 
   const handleCardClick = (
     event: React.MouseEvent<HTMLDivElement>,
@@ -29,14 +31,6 @@ const ListItems = <T extends IListData>({
     if (id) {
       router.push(`/${itemType}/${id}`);
     }
-  };
-
-  const isRestaurant = (item: IListData): item is IRestaurantData => {
-    return itemType === "restaurant";
-  };
-
-  const isDish = (item: IListData): item is IDishData => {
-    return itemType === "dish";
   };
 
   if (items.length === 0) {
@@ -98,32 +92,12 @@ const ListItems = <T extends IListData>({
             className={styles.cardWrapper}
             style={{ flex: `0 0 ${100 / slidesToShow}%` }}
           >
-            <div
-              className={styles.card}
-              onClick={(event) => handleCardClick(event, item.id)}
-            >
-              <img
-                src={item.image || "/restaurant_default.jpg"}
-                alt={item.name}
-                title={
-                  item.image ? "" : "Imagem padrão: Nenhuma foto disponível."
-                }
-              />
-              <div className={styles.info}>
-                <h3>{item.name}</h3>
-                {isRestaurant(item) && <p>{item.address}</p>}
-                {isRestaurant(item) && <p>{item.phone}</p>}
-                {isDish(item) && <p>{`Preço: R$ ${item.price}`}</p>}
-                <div className={styles.rating}>
-                  {Array(5)
-                    .fill("⭐")
-                    .map((star, index) => (
-                      <span key={index}>{star}</span>
-                    ))}
-                  <span className={styles.reviewCount}>100 avaliações</span>
-                </div>
-              </div>
-            </div>
+            <CardList
+              item={item}
+              rating={ratings[item.id]}
+              onClick={handleCardClick}
+              itemType={itemType}
+            />
           </div>
         ))}
       </Carousel>
