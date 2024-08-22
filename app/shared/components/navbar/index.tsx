@@ -21,15 +21,17 @@ const Navbar = () => {
   return (
     <div className={styles.container}>
       <div className={styles.toplevel}>
-        <Link href="/home">
+        <Link href="/">
           <Image src={Logo} alt="navLogo" className={styles.logoImg} />
         </Link>
         <nav className={styles.navbar}>
           <div className={styles.navleft}>
-            {/*  <Link href="/" className={styles.navLink}>
-              <HomeIcon />
-              <span>Início</span>
-            </Link> */}
+            <Link href="/" className={styles.navLink}>
+              <span>Restaurantes</span>
+            </Link>
+            <Link href="/dishes" className={styles.navLink}>
+              <span>Pratos</span>
+            </Link>
           </div>
 
           <div className={styles.navright}>
