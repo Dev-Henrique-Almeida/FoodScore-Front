@@ -10,16 +10,6 @@ interface IUserData {
   birthdate?: string;
 }
 
-interface IRestaurantData {
-  id?: string;
-  name: string;
-  address: string;
-  phone: string;
-  image?: string;
-  createdAt?: string;
-  updatedAt?: string;
-}
-
 interface ILoginData {
   email: string;
   password: string;
@@ -62,8 +52,29 @@ interface ICustomSelectProps {
   options: { value: string; label: string }[];
 }
 
+interface IListData {
+  id: string;
+  name: string;
+  image?: string;
+  createdAt: string;
+  updatedAt?: string;
+}
+
+interface IRestaurantData extends IListData {
+  address: string;
+  phone: string;
+}
+
+interface IDishData extends IListData {
+  description: string;
+  price: number;
+  mealType: string;
+}
+
 export type {
   IUserData,
+  IListData,
+  IDishData,
   ICustomSelectProps,
   IRestaurantData,
   ICustomInputProps,

@@ -29,7 +29,7 @@ const Navbar = () => {
             <Link href="/" className={styles.navLink}>
               <span>Restaurantes</span>
             </Link>
-            <Link href="/dishes" className={styles.navLink}>
+            <Link href="/dish" className={styles.navLink}>
               <span>Pratos</span>
             </Link>
           </div>

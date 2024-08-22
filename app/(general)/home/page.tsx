@@ -1,10 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
-import Search from "@/app/shared/components/homepage/search";
+import Search from "@/app/shared/components/inputs/searchInput";
 import styles from "./home.module.scss";
 import { ListRestaurants } from "@/app/shared/service";
 import { IRestaurantData } from "@/app/shared/@types";
-import RestaurantList from "@/app/shared/components/homepage/restaurant/RestaurantList";
+import ListContainer from "@/app/shared/components/listItems/listContainer";
+import ListItems from "@/app/shared/components/listItems";
 
 export default function Home() {
   const [, setSearchTerm] = useState("");
@@ -21,9 +22,14 @@ export default function Home() {
 
   return (
     <div className={styles.topLevel}>
-      <Search onSearchChange={setSearchTerm} restaurants={restaurants} />
+      <Search onSearchChange={setSearchTerm} search={restaurants} />
       <div className={styles.container}>
-        <RestaurantList restaurants={restaurants} />
+        <ListContainer
+          fetchData={ListRestaurants}
+          renderComponent={(items) => (
+            <ListItems items={items} itemType={"restaurant"} />
+          )}
+        />
       </div>
     </div>
   );
