@@ -32,10 +32,10 @@ export default function Search({ onSearchChange, search }: SearchProps) {
       const selectedSearch = search.find((searchs) => searchs.name === value);
       if (selectedSearch) {
         // chamando a rota de detalhes do restaurante
-        const itemType = (selectedSearch as IRestaurantData).address
+        const type = (selectedSearch as IRestaurantData).address
           ? "restaurant"
           : "dish";
-        router.push(`/${itemType}/${selectedSearch.id}`);
+        router.push(`/${type}/${selectedSearch.id}`);
       }
     }
   };
@@ -53,7 +53,7 @@ export default function Search({ onSearchChange, search }: SearchProps) {
             InputProps={{
               ...params.InputProps,
               value: inputValue,
-              placeholder: "Informe o nome do restaurante",
+              placeholder: "Informe o nome do item",
               sx: {
                 "&::placeholder": {
                   opacity: inputValue ? 0 : 1,
