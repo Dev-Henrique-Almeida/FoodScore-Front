@@ -1,18 +1,23 @@
 .card {
-  width: 100%;
-  max-width: 260px;
+  width: 260px;
   height: 350px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-  overflow: hidden;
   background-color: #fff;
   text-align: left;
   cursor: pointer;
 
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
   img {
-    width: 100%;
+    width: 260px;
     height: 185px;
     object-fit: cover;
+    border-radius: 8px;
   }
 
   .info {
