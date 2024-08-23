@@ -1,8 +1,8 @@
 import React from "react";
+import { Splide, SplideSlide } from "@splidejs/react-splide";
+import "@splidejs/react-splide/css";
 import { useRouter } from "next/navigation";
 import styles from "./listItems.module.scss";
-import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { IListData } from "@/app/shared/@types";
 import useRatings from "../../hooks/Rating/useRatings";
@@ -47,60 +47,50 @@ const ListItems = <T extends IListData>({
         Relacionado aos {itemType === "restaurant" ? "restaurantes" : "pratos"}{" "}
         vistos por você
       </h2>
-      <Carousel
-        className={styles.carouselContainer}
-        showThumbs={false}
-        showStatus={false}
-        infiniteLoop
-        useKeyboardArrows
-        swipeable
-        emulateTouch
-        dynamicHeight={false}
-        selectedItem={0}
-        interval={3000}
-        transitionTime={500}
-        autoPlay={false}
-        stopOnHover
-        centerMode={slidesToShow > 1}
-        centerSlidePercentage={100 / slidesToShow}
-        renderArrowNext={(onClickHandler, hasNext, label) =>
-          hasNext && (
-            <div
-              className={styles.arrowNext}
-              onClick={onClickHandler}
-              title={label}
-            >
-              ▷
-            </div>
-          )
-        }
-        renderArrowPrev={(onClickHandler, hasPrev, label) =>
-          hasPrev && (
-            <div
-              className={styles.arrowPrev}
-              onClick={onClickHandler}
-              title={label}
-            >
-              ◁
-            </div>
-          )
-        }
-      >
-        {items.map((item) => (
-          <div
-            key={item.id}
-            className={styles.cardWrapper}
-            style={{ flex: `0 0 ${100 / slidesToShow}%` }}
-          >
-            <CardList
-              item={item}
-              rating={ratings[item.id]}
-              onClick={handleCardClick}
-              itemType={itemType}
-            />
-          </div>
-        ))}
-      </Carousel>
+      <div className={styles.sliderContainer}>
+        <Splide
+          options={{
+            type: "slide",
+            perPage:
+              items.length === 1 ? 1 : items.length === 2 ? 2 : slidesToShow,
+            perMove: 1,
+            gap: items.length <= 2 ? "20px" : "10px", // Ajuste o gap para 1 ou 2 itens
+            pagination: true,
+            
+            arrows: items.length >= 4, // Esconde as setas se houver menos de 4 itens
+            breakpoints: {
+              1024: {
+                perPage: items.length === 1 ? 1 : items.length === 2 ? 2 : 2,
+              },
+              768: {
+                perPage: 1,
+              },
+            },
+          }}
+        >
+          {items.map((item) => (
+            <SplideSlide key={item.id}>
+              <div
+                className={`${styles.cardWrapper} ${
+                  items.length === 1
+                    ? "singleItem"
+                    : items.length === 2
+                    ? "twoItems"
+                    : ""
+                }`}
+                style={{ marginBottom: "30px" }}
+              >
+                <CardList
+                  item={item}
+                  rating={ratings[item.id]}
+                  itemType={itemType}
+                  onClick={(e) => handleCardClick(e, item.id)}
+                />
+              </div>
+            </SplideSlide>
+          ))}
+        </Splide>
+      </div>
     </div>
   );
 };

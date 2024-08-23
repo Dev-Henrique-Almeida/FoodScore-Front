@@ -18,17 +18,20 @@
   }
 }
 
-.carousel .slide {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0 10px;
-}
-
 .cardWrapper {
-  min-height: 400px;
-  display: flex;
+  display: flex !important;
   justify-content: center;
+  padding: 10px;
+
+  // Quando há apenas um item, centralize o card no contêiner
+  &.singleItem {
+    justify-content: center !important;
+    padding: 0 !important;
+  }
+  
+  &.twoItems {
+    justify-content: space-between !important;
+  }
 }
 
 .card {
@@ -41,6 +44,11 @@
   background-color: #fff;
   text-align: left;
   cursor: pointer;
+  transition: transform 0.3s ease; 
+
+  &:hover {
+    transform: scale(1.1); 
+  }
 
   img {
     width: 100%;
@@ -80,14 +88,13 @@
     }
   }
 }
-
 .arrowNext,
 .arrowPrev {
   background: rgba(0, 0, 0, 0.5);
-  color: #fff;
+  color: #f8d2d2;
   border-radius: 50%;
-  width: 30px;
-  height: 30px;
+  width: fit-content;
+  height: fit-content;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -97,12 +104,19 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+  transition: none;
 }
 
-.arrowNext {
-  right: 10px;
+.arrowNext:hover,
+.arrowPrev:hover {
+  background: rgba(0, 0, 0, 0.5);
+  color: #f8d2d2;
+  transform: translateY(-50%);
 }
 
-.arrowPrev {
-  left: 10px;
+
+
+.sliderContainer {
+  position: relative;
+  padding-bottom: 40px; 
 }
