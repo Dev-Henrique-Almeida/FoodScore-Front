@@ -73,6 +73,8 @@ interface IListData {
 interface IRestaurantData extends IListData {
   address: string;
   phone: string;
+  openingTime: string;
+  closingTime: string;
 }
 
 interface IDishData extends IListData {

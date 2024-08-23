@@ -9,12 +9,7 @@ import {
 import useFormattedPrice from "../../../hooks/FormattedPrice/useFormattedPrice";
 import useRenderStars from "../../../hooks/RenderStars/useRenderStars";
 
-const CardList: React.FC<ICardProps> = ({
-  item,
-  rating,
-  onClick,
-  itemType,
-}) => {
+const CardList: React.FC<ICardProps> = ({ item, rating, onClick, itemType }) => {
   const isRestaurant = (item: IListData): item is IRestaurantData => {
     return itemType === "restaurant";
   };
@@ -24,8 +19,7 @@ const CardList: React.FC<ICardProps> = ({
   };
 
   const formattedPrice = isDish(item) ? useFormattedPrice(item.price) : null;
-
-  const stars = useRenderStars(rating ? rating.averageRating : 0); // Sempre chamar o hook
+  const stars = useRenderStars(rating ? rating.averageRating : 0);
 
   return (
     <div className={styles.card} onClick={(event) => onClick(event, item.id)}>
@@ -37,6 +31,9 @@ const CardList: React.FC<ICardProps> = ({
       <div className={styles.info}>
         <h3>{item.name}</h3>
         {isRestaurant(item) && <p>{item.address}</p>}
+        {isRestaurant(item) && (
+          <p>{`Horário: ${item.openingTime} - ${item.closingTime}`}</p>
+        )}
         {isRestaurant(item) && <p>{item.phone}</p>}
         {isDish(item) && <p>{`Preço: ${formattedPrice}`}</p>}
         <div className={styles.rating}>
@@ -51,3 +48,4 @@ const CardList: React.FC<ICardProps> = ({
 };
 
 export default CardList;
+
