@@ -10,4 +10,3 @@ declare module '@splidejs/react-splide' {
     export class Splide extends React.Component<SplideProps> {}
     export class SplideSlide extends React.Component<{ children: React.ReactNode }> {}
   }
-  
